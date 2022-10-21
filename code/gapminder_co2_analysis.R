@@ -177,3 +177,13 @@ gapminder_data_2007 <- read_csv("data/gapminder_data.csv") %>%
 
 inner_join(gapminder_data_2007, co2_emissions_clean_2005, by = "country")
 
+gapminder_co2 <- inner_join(gapminder_data_2007, co2_emissions_clean_2005, 
+                            by = "country")
+
+gapminder_co2 %>%
+  mutate(region = if_else(country == "Canada" | 
+                            country == "United States" |
+                            country == "Mexico", "north", "south"))
+
+write_csv(gapminder_co2, "data/gapminder_co2.csv")
+
