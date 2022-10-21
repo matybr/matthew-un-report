@@ -1,0 +1,84 @@
+---
+title: "Writing Reports with R Markdown"
+author: "matthewbrown"
+date: "2022-10-21"
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, include=FALSE}
+library(here)
+library(tidyverse)
+library(knitr)
+```
+
+This report was prepared for the UN. It analyzes the relationship between a country's GDP, life expectancy, and CO2 emissions. Our goal was to determine to what degree a country's economic strength or weakness may be related to its public health status and impact on climate pollution. We hypothesize that life expectancy and CO2 emissions will increase with a country's GDP.
+
+```{r data, include=FALSE}
+gapminder_1997 <- read_csv(here("data/gapminder_1997.csv"))
+```
+
+
+```{r gdp_lifeexp_1997, echo=FALSE}
+ggplot(gapminder_1997, aes(x = gdpPercap, y = lifeExp, color = continent,
+                           size = pop/1000000)) +
+  geom_point() +
+  labs(x = "GDP (per capita)", 
+                y = "Life Expectancy",
+                title = "Do people in wealthy countries live longer?",
+                size = "Population (in millions)", 
+                color = "Continent")
+```
+
+```{r summary_data}
+n_countries <- gapminder_1997 %>%
+  select(country) %>%
+  n_distinct()
+
+min_gdp <- gapminder_1997 %>%
+  summarize(min = round(min(gdpPercap)))
+
+max_gdp <- gapminder_1997 %>%
+  summarize(max = signif(max(gdpPercap), 1))
+
+```
+
+The above plot shows the relationship between GDP per capita and life expectancy for a total of `r n_countries` countries. For these countries economic wealth ranged from a minimum of $`r min_gdp` to a maximum of $`r max_gdp` per capita
+
+|Summary of Data|
+|--------------------|-----------------|
+|Number of countries | `r n_countries` | 
+|Minimum GDP per cap | `r min_gdp`     |
+|Maximum GDP per cap | `r max_gdp`     |
+
+```{r tables}
+gapminder_1997 %>%
+  filter(continent == "Oceania") %>%
+  kable()
+
+
+```
+
+
+
+## lists 
+
+### unordered lists
+* **Python**
+  * I don't know Python
+* *filter*
+* ***automating plot making***
+* [Markdown Guide](https://www.markdownguide.org/basic-syntax/)
+
+### ordered lists
+1. **Python**
+2. *filter*
+3. ***automating plot making***
+4. Markdown Guide (https://www.markdownguide.org/basic-syntax/)
+
+
