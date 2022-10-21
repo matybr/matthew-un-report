@@ -19,13 +19,39 @@ gapminder <- read_csv("../data/gapminder_data.csv")
 ```{r}
 
 ggplot(gapminder, aes(x=year, y=pop)) + geom_point() + facet_wrap(vars(continent))
+
 gapminder_asia <- gapminder %>% filter(continent == "Asia")
 ggplot(gapminder_asia, aes(x=year, y=pop, color=country)) + geom_point() + facet_wrap(vars(continent))
 
 ```
 
 
+```{r}
+gapminder_clean <- gapminder %>%
+  filter(country != "China" &
+           country != "India")
+```
+
+```{r}
+ggplot(gapminder_clean, aes(x = year, y = pop)) +
+  facet_wrap(vars(continent)) +
+  geom_point()
+```
+
+```{r}
+gapminder %>%
+  filter(year == 1982) %>%
+  slice_max(lifeExp)
+
+gapminder %>%
+  group_by(year) %>%
+  slice_max(lifeExp)
+```
 
 
-
+```{r}
+ggplot(gapminder_asia, aes(x = year, y = lifeExp, group_by = country)) +
+  labs(x = "Year", y = "Life Expectancy") +
+  geom_boxplot()
+```
 
