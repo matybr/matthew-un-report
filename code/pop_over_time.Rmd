@@ -1,0 +1,31 @@
+---
+title: "Investigating Population Over Time"
+author: "Grace Kenney"
+date: "2022-10-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+
+gapminder <- read_csv("../data/gapminder_data.csv")
+
+```
+
+```{r}
+
+ggplot(gapminder, aes(x=year, y=pop)) + geom_point() + facet_wrap(vars(continent))
+gapminder_asia <- gapminder %>% filter(continent == "Asia")
+ggplot(gapminder_asia, aes(x=year, y=pop, color=country)) + geom_point() + facet_wrap(vars(continent))
+
+```
+
+
+
+
+
+
