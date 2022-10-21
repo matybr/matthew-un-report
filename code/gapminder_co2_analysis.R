@@ -78,3 +78,18 @@ gapminder_data_2007 <-
   select(-year, -continent)
 
 view(gapminder_data_2007)  
+
+
+
+
+# data cleaning
+
+read_csv("data/co2-un-data.csv", skip = 1)
+
+read_csv("data/co2-un-data.csv", skip = 2,
+         col_names = c("region","country","year","series", 
+                       "value", "footnotes", "source"))
+
+read_csv("data/co2-un-data.csv", skip = 1) %>%
+  rename(country = ...2)
+
